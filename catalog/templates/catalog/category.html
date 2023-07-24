@@ -1,0 +1,34 @@
+{% extends 'catalog/base.html' %}
+{% block content %}
+<main>
+  <section class="py-5 text-center container">
+    <div class="row py-lg-5">
+      <div class="col-lg-6 col-md-8 mx-auto">
+        <h1 class="fw-light">Категории</h1>
+        <p class="lead text-body-secondary">Описание</p>
+        </p>
+      </div>
+    </div>
+  </section>
+
+<div class="p-5 row d-flex mb-3 text-center justify-content-around w-100 align-items-center row-cols-md-3">
+            {% for objects in category_list %}
+            <div class="col">
+                <div class="card mb-4 rounded-3 shadow-sm">
+                    <div class="card-header py-3">
+                        <h4 class="my-0 fw-normal">{{ objects|title }}</h4>
+                    </div>
+                    <div class="card-body">
+                        <h1 class="card-title pricing-card-title"><small class="text-body-secondary fw-light"></small></h1>
+                        <ul class="list-unstyled mt-3 mb-4">
+                            <li>{{ objects.description|title }}</li>
+                        </ul>
+                        <button type="button" class="w-100 btn btn-lg btn-outline-primary">Показать</button>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+</main>
+{% endblock %}

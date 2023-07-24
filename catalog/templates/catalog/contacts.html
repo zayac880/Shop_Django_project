@@ -18,27 +18,9 @@
     <hr>
     <ul class="nav nav-pills flex-column mb-auto">
       <li class="nav-item">
-        <a href="/" class="nav-link text-white" aria-current="page">
+          <a href="{% url 'catalog:home' %}" class="nav-link text-white active" aria-current="page">
           <i class="bi bi-house"></i>
-          Главная
-        </a>
-      </li>
-      <li>
-        <a href="category/" class="nav-link text-white">
-          <i class="bi bi-justify"></i>
-          Категории
-        </a>
-      </li>
-      <li>
-        <a href="catalog/" class="nav-link text-white">
-          <i class="bi bi-cart4"></i>
-          Заказы
-        </a>
-      </li>
-      <li>
-        <a href="contacts/" class="nav-link text-white active">
-          <i class="bi bi-question-square"></i>
-          Контакты
+          На главную страницу
         </a>
       </li>
     </ul>
@@ -60,6 +42,7 @@
         <div class="p-5 row rounded row-cols-sm-2 g-5">
             <form class="bg-light" action="" method="POST">
                 {% csrf_token %}
+                <h2 class="text text-body-emphasis">Напишите нам</h2>
                 <div class="mb-3">
                 <label for="name" class="form-label">Имя</label>
                 <input type="text" class="form-control" id="name" name="name" required="">
@@ -78,7 +61,9 @@
             </form>
             <div class="p-5 col d-flex flex-column align-items-start gap-2">
             <h2 class="fw-bold text-body-emphasis">Наши контакты</h2>
-            <p class="text-body-secondary">Fear of the dark I am a man who walks alone And when I'm walking a dark road At night or strolling through the park When the light begins to change I sometimes feel a little strange A little anxious when it's dark.</p>
+            <p class="text-body-emphasis">Офис МСК:</p><h4 class="text-body-secondary">+0 (000)000-00-00</h4>
+                <p class="text-body-emphasis">Telegram:</p><h4 class="text-body-secondary"> @eae786787</h4>
+                <p class="text-body-emphasis">Почта:</p><h4 class="text-body-secondary"> жиши@яхудею.да</h4>
             </div>
         </div>
     </div>
