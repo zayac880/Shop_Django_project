@@ -1,4 +1,5 @@
 {% extends 'catalog/base.html' %}
+{% load tags_lib %}
 {% block content %}
 <main>
   <section class="py-5 text-center container">
@@ -11,22 +12,19 @@
     </div>
   </section>
 
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 g-5">
-            <div class="col">
-          <div class="card shadow-sm">
-            <svg class="bd-placeholder-img card-img-top" width="100%"  height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-            <div class="card-body">
-              <p class="card-text">{{ product.name|title }}</p>
-                <p class="card-text">{{ product.price|title }} руб.</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">В корзину</button>
-                </div>
-                <small class="text-body-secondary">9 mins</small>
-              </div>
-            </div>
+    <div class="p-5 row featurette">
+      <div class="col-md-5 order-md-2">
+        <h2 class="featurette-heading fw-normal lh-1">{{ product.name|title }}<span class="text-body-secondary">  - Это ваш выбор!</span></h2>
+        <p class="lead">{{ product.description|title }}</p>
+      </div>
+      <div class="p-6 col-md-5 order-md-1">
+        <img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid" width="500" height="500" src="{% mediapath product.image %}">
+          <text fill="var(--bs-secondary-color)">{{ product.price|title }} руб.</text>
+        </img>
+          <div class="col">
+              <a href="{% url 'catalog:home' %}" type="button" class="w-100 btn btn-lg btn-outline-primary">← </a>
           </div>
-        </div>
-        </div>
+      </div>
+    </div>
 </main>
 {% endblock %}

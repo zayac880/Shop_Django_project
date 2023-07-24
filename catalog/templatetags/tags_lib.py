@@ -1,10 +1,9 @@
 from django import template
+from django.conf import settings
 
 register = template.Library()
 
-
-@register.filter
+@register.simple_tag
 def mediapath(image):
-    from django.conf import settings
     media_url = settings.MEDIA_URL
-    return media_url + image
+    return f'{media_url}{image}'

@@ -3,51 +3,43 @@
     "model": "catalog.category",
     "pk": 31,
     "fields": {
-      "name": "pumas",
-      "description": "lalala"
+      "name": "Мужские кроссовки",
+      "description": "Категория мужских кроссовок"
     }
   },
   {
     "model": "catalog.category",
     "pk": 32,
     "fields": {
-      "name": "nikita",
-      "description": "lalala"
+      "name": "Женские кроссовки",
+      "description": "Категория женских кроссовок"
     }
   },
   {
     "model": "catalog.category",
     "pk": 33,
     "fields": {
-      "name": "abibas",
-      "description": "lalala"
+      "name": "Детские кроссовки",
+      "description": "Категория детских кроссовок"
     }
   },
   {
     "model": "catalog.category",
     "pk": 34,
     "fields": {
-      "name": "ebalan",
-      "description": "lalala"
-    }
-  },
-  {
-    "model": "catalog.category",
-    "pk": 35,
-    "fields": {
-      "name": "zolomoto",
-      "description": "lalala"
+      "name": "Беговые кроссовки",
+      "description": "Категория беговых кроссовок"
     }
   },
   {
     "model": "catalog.product",
     "pk": 7,
     "fields": {
-      "name": "Не рыба",
-      "description": "Не вонючка",
+      "name": "Nike Air Max",
+      "description": "Легкие и комфортные кроссовки для бега",
       "image": "",
       "category": 34,
-      "price": "999999.00",
+      "price": "9999.00",
       "date_created": "2023-07-21T19:08:38.694Z",
       "last_modified_date": "2023-07-21T19:08:38.694Z"
     }
@@ -56,13 +48,52 @@
     "model": "catalog.product",
     "pk": 8,
     "fields": {
-      "name": "Рыба",
-      "description": "вонючка",
+      "name": "Adidas Ultraboost",
+      "description": "Стильные и поддерживающие кроссовки для тренировок",
       "image": "",
-      "category": 33,
-      "price": "1.00",
+      "category": 34,
+      "price": "8999.00",
       "date_created": "2023-07-21T19:08:59.717Z",
       "last_modified_date": "2023-07-21T19:08:59.717Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 9,
+    "fields": {
+      "name": "Reebok Classic",
+      "description": "Классические и удобные повседневные кроссовки",
+      "image": "",
+      "category": 31,
+      "price": "6999.00",
+      "date_created": "2023-07-21T19:09:15.285Z",
+      "last_modified_date": "2023-07-21T19:09:15.285Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 10,
+    "fields": {
+      "name": "Puma RS-X",
+      "description": "Модные и стильные кроссовки от Puma",
+      "image": "",
+      "category": 31,
+      "price": "7999.00",
+      "date_created": "2023-07-21T19:09:37.853Z",
+      "last_modified_date": "2023-07-21T19:09:37.853Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 11,
+    "fields": {
+      "name": "Asics Gel-Nimbus",
+      "description": "Подушечка для ваших ног от Asics",
+      "image": "",
+      "category": 34,
+      "price": "8499.00",
+      "date_created": "2023-07-21T19:09:54.217Z",
+      "last_modified_date": "2023-07-21T19:09:54.217Z"
     }
   }
 ]

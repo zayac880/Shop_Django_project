@@ -23,7 +23,6 @@ def product_view(request, product_id):
     context = {
         'product': product[0]
     }
-    print(product[0].image)
     return render(request, 'catalog/product_view.html', context)
 
 
