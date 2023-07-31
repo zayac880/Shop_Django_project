@@ -1,0 +1,22 @@
+{% extends 'catalog/base.html' %}
+{% block content %}
+<main>
+    <div class="p-5 row featurette">
+      <div class="col-md-5 order-md-2">
+        <h2 class="featurette-heading fw-normal lh-1">{{ blog.title|title }}<span class="text-body-secondary"> ({{ object.slug }}) - Это ваш выбор!</span></h2>
+        <p class="lead">{{ blog.content|title }}</p>
+      </div>
+      <div class="p-6 col-md-5 order-md-1">
+        <img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid" width="500" height="500" src="{{ blog.preview}}">
+          <text fill="var(--bs-secondary-color)"></text>
+        </img>
+          <div class="col">
+              <a href="{% url 'catalog:blog' %}" type="button" class="w-100 btn btn-lg btn-outline-primary">← </a>
+          </div>
+          <div class ="card-footer">
+              просмотры: {{ object.views_count }}
+          </div>
+      </div>
+    </div>
+</main>
+{% endblock %}

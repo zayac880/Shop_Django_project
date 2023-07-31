@@ -1,0 +1,35 @@
+{% extends 'catalog/base.html' %}
+{% block content %}
+    <div class="col-12 mb-5">
+        <a class="btn btn-outline-primary" href="{% url 'catalog:create' %}">Добавить материал</a>
+    </div>
+    {% for objects in blog_list %}
+            <div class="col" >
+                <div class="card mb-4 rounded-3 shadow-sm" style="height: 480px">
+                    <div class="card-header py-3">
+                        <h4 class="my-0 fw-normal">{{ objects.title|title }}</h4>
+                    </div>
+                    <div class="card-body d-flex flex-column">
+                        <div class="col align-items-center">
+                        <img src="{{ objects.preview }}" width="150" class="img-responsive" alt="">
+                        </div>
+                        <h1 class="card-title pricing-card-title">122<small class="text-body-secondary fw-light"></small></h1>
+                        <ul class="list-unstyled">
+                            <li>{{ objects.content }}</li>
+                        </ul>
+                        <div class="row mt-auto">
+                            <div class="col">
+                            <a href="{% url 'catalog:blog_view' objects.pk %}" type="button" class="w-100 btn btn-lg btn-outline-primary">Просмотр </a>
+                            </div>
+                            <div class="col">
+                            <a href="{% url 'catalog:blog_update' objects.pk %}" type="button" class="w-100 btn btn-lg btn-outline-primary">Обновить </a>
+                            </div>
+                            <div class="col">
+                            <a href="{% url 'catalog:blog_delete' objects.pk %}" type="button" class="w-100 btn btn-lg btn-outline-primary">удалить </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    {% endfor %}
+{% endblock %}
