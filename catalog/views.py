@@ -3,7 +3,7 @@ from django.urls import reverse_lazy, reverse
 from django.forms import inlineformset_factory
 from django.shortcuts import render
 
-from catalog.forms import ProductForm, VersionForm
+from catalog.forms import ProductForm, VersionForm, VersionFormSet
 from catalog.models import Category, Product, Blog, Version
 from pytils.translit import slugify
 
@@ -42,7 +42,7 @@ class ProductUpdateView(UpdateView):
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
-        VersionFormset = inlineformset_factory(Product, Version, form=VersionForm, extra=1)
+        VersionFormset = inlineformset_factory(Product, Version, form=VersionForm, formset=VersionFormSet, extra=1)
         if self.request.method == 'POST':
             context_data['version'] = VersionFormset(self.request.POST, instance=self.object)
         else:
