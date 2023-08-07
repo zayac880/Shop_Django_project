@@ -38,3 +38,13 @@ class Blog(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Version(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='продукт')
+    version_number = models.CharField(max_length=20, verbose_name='номер версии')
+    version_name = models.CharField(max_length=100, verbose_name='название версии')
+    is_current_version = models.BooleanField(default=False, verbose_name='признак текущей версии')
+
+    def __str__(self):
+        return f'{self.product.name} - Версия {self.version_number}'

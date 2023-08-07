@@ -1,11 +1,14 @@
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy, reverse
-
+from django.forms import inlineformset_factory
 from django.shortcuts import render
-from catalog.models import Category, Product, Blog
+
+from catalog.forms import ProductForm, VersionForm
+from catalog.models import Category, Product, Blog, Version
 from pytils.translit import slugify
 
 
+# Домашняя
 class HomeListView(ListView):
     model = Product
     template_name = 'catalog/home.html'
@@ -14,16 +17,49 @@ class HomeListView(ListView):
         return Product.objects.filter(is_active=True).all()[:5]
 
 
+# Категории
 class CategoryListView(ListView):
     model = Category
     template_name = 'catalog/category.html'
 
 
+# Продукты
 class ProductDetailView(DetailView):
     model = Product
     template_name = 'catalog/product_view.html'
 
 
+class ProductCreateView(CreateView):
+    model = Product
+    form_class = ProductForm
+    success_url = reverse_lazy('catalog:home')
+
+
+class ProductUpdateView(UpdateView):
+    model = Product
+    form_class = ProductForm
+    success_url = reverse_lazy('catalog:home')
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        VersionFormset = inlineformset_factory(Product, Version, form=VersionForm, extra=1)
+        if self.request.method == 'POST':
+            context_data['version'] = VersionFormset(self.request.POST, instance=self.object)
+        else:
+            context_data['version'] = VersionFormset(instance=self.object)
+        return context_data
+
+    def form_valid(self, form):
+        formset = self.get_context_data()['version']
+        self.object = form.save()
+        if formset.is_valid():
+            formset.instance = self.object
+            formset.save()
+
+        return super().form_valid(form)
+
+
+# Контакты
 def contacts(request):
     if request.method == 'POST':
         print(request.POST.get('name'))
@@ -32,6 +68,7 @@ def contacts(request):
     return render(request, 'catalog/contacts.html')
 
 
+# БЛОГ
 class BlogCreateView(CreateView):
     model = Blog
     fields = ['title', 'content']

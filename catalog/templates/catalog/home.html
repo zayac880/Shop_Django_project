@@ -1,7 +1,7 @@
 {% extends 'catalog/base.html' %}
 {% load tags_lib %}
 {% block content %}
-<main>
+
   <section class="py-5 text-center container">
     <div class="row py-lg-5">
       <div class="col-lg-6 col-md-8 mx-auto">
@@ -10,8 +10,10 @@
       </div>
     </div>
   </section>
-
-<div class="p-5 row d-flex mb-3 text-center justify-content-around w-100 align-items-center row-cols-md-3">
+            <div class="p-5 col-12">
+                <a class="btn btn-outline-primary" href="{% url 'catalog:create_product' %}">Добавить товар</a>
+            </div>
+        <div class="p-5 row d-flex mb-3 text-center justify-content-around w-100 align-items-center row-cols-md-3">
             {% for objects in product_list %}
             <div class="col" >
                 <div class="card mb-4 rounded-3 shadow-sm" style="height: 480px">
@@ -33,6 +35,9 @@
                             <div class="col">
                             <button type="button" class="w-100 btn btn-lg btn-outline-primary">В корзину</button>
                             </div>
+                            <div class="col">
+                            <a href="{% url 'catalog:update_product' objects.pk %}" type="button" class="w-100 btn btn-lg btn-outline-primary">Редактировать</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -40,5 +45,5 @@
             {% endfor %}
         </div>
 
-</main>
+
 {% endblock %}
