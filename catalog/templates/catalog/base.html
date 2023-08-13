@@ -23,6 +23,13 @@
                             <li><a href="#" class="text-white">Корзина</a></li>
                             <li><a href="{% url 'catalog:contacts' %}" class="text-white">Контакты</a></li>
                             <li><a href="{% url 'catalog:blog' %}" class="text-white">Блог</a></li>
+                              {% if user.is_authenticated %}
+                                <li><a href="{% url 'users:logout' %}" class="text-white">Выйти</a></li>
+                                <li><a href="{% url 'users:redact' %}" class="text-white">Профиль</a></li>
+                              {% else %}
+                                <li><a href="{% url 'users:login' %}" class="text-white">Войти</a></li>
+                                <li><a href="{% url 'users:register' %}" class="text-white">Регистрация</a></li>
+                              {% endif %}
                           </ul>
                         </div>
                     </div>
