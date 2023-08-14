@@ -10,7 +10,13 @@
                     <div class="card-body">
                             {% csrf_token %}
                             {{ form.as_p }}
-                            <button type="submit" class="btn btn-success">Сохранить</button>
+                            <button type="submit" class="btn btn-success">
+                                {% if object %}
+                                    Сохранить
+                                {% else %}
+                                    Добавить
+                                {% endif %}
+                            </button>
                     </div>
                     <div class="card-footer"></div>
                 </div>
@@ -26,6 +32,9 @@
                               {{ version.management_form }}
                               {% for v in version.forms %}
                                   {{ v.as_p }}
+                                  {% if not forloop.last %}
+                                      <hr>
+                                  {% endif %}
                               {% endfor %}
                           </div>
                   </div>

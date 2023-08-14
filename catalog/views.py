@@ -14,7 +14,7 @@ class HomeListView(ListView):
     template_name = 'catalog/home.html'
 
     def get_queryset(self):
-        return Product.objects.filter(is_active=True).all()[:5]
+        return Product.objects.filter(is_active=True).all()[:6]
 
 
 # Категории
@@ -33,6 +33,13 @@ class ProductCreateView(CreateView):
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy('catalog:home')
+
+    def form_valid(self, form):
+        self.object = form.save()
+        self.object.owner = self.request.user
+        self.object.save()
+
+        return super().form_valid(form)
 
 
 class ProductUpdateView(UpdateView):

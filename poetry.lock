@@ -54,6 +54,17 @@ doc = ["sphinx"]
 test = ["pytest", "pytest-cov"]
 
 [[package]]
+name = "subject"
+version = "0.1.0"
+description = "Django Subject"
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "subject-0.1.0.tar.gz", hash = "sha256:1c725dac47efb38b53dd85ca352458f691fbf55429ab55c3f69c4cf65ed87839"},
+]
+
+[[package]]
 name = "tzdata"
 version = "2023.3"
 description = "Provider of IANA time zone data"
@@ -68,4 +79,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "f7d2f7f83ae8ae00312a06c6255ad1988bcb9d17bebbe553ec53aed9b1dc8e16"
+content-hash = "eaa04aced09771dde6bfd7d6f72afecb410e74ff28e26b2463661862a9edf51f"

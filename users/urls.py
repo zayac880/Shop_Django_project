@@ -2,7 +2,7 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import path
 
 from users.apps import UsersConfig
-from users.views import RegisterView, RedactView
+from users.views import RegisterView, RedactView, generate_password
 
 app_name = UsersConfig.name
 
@@ -12,4 +12,5 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(), name='logout'),
     path('register/', RegisterView.as_view(), name='register'),
     path('redact/', RedactView.as_view(), name='redact'),
+    path('redact/genpassword/', generate_password, name='generate_password'),
 ]

@@ -53,7 +53,9 @@
                             {{ form.as_p }}
                             <button type="submit" class="btn btn-success">Сохранить</button>
                     </div>
-                        <div class="card-footer"></div>
+                        <div class="card-footer">
+                            <a href="{% url 'users:generate_password' %}" class="btn btn-danger">Сгенерировать новый пароль</a>
+                        </div>
                     </div>
                 </div>
             </form>
