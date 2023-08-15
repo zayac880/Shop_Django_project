@@ -9,6 +9,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
 from django.contrib.auth.tokens import default_token_generator
+from django.contrib import messages
 
 
 from users.forms import UserRegisterForm, UserRedactForm
@@ -30,7 +31,7 @@ class RegisterView(CreateView):
         token = default_token_generator.make_token(new_user)
         uid = urlsafe_base64_encode(force_bytes(new_user.pk))
         current_site = get_current_site(self.request)
-        activation_link = f"http://{current_site.domain}/activate/{uid}/{token}/"
+        activation_link = f"http://{current_site.domain}/users/activate/{uid}/{token}/"
 
 
         send_mail(
@@ -67,16 +68,20 @@ def generate_password(request):
 
 
 def activate_account(request, uidb64, token):
-    print('activate')
     try:
         uid = force_str(urlsafe_base64_decode(uidb64))
-        print(uid)
         user = User.objects.get(pk=uid)
     except (TypeError, ValueError, OverflowError, User.DoesNotExist):
         user = None
 
-    if user is not None and default_token_generator.check_token(user, token):
-        user.is_active = True
-        user.save()
-        return redirect(reverse('users:login'))
+    if user and default_token_generator.check_token(user, token):
+        if not User.objects.filter(email=user.email, is_active=True).exists():
+            user.is_active = True
+            user.save()
+            return redirect(reverse('users:login'))
+        else:
+            messages.error(request, 'Аккаунт с этим email уже активирован.')
+            return redirect(reverse('users:account_activation_failed'))
+    else:
+        return redirect(reverse('users:account_activation_failed'))
 
