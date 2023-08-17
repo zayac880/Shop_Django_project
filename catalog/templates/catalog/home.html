@@ -10,9 +10,11 @@
       </div>
     </div>
   </section>
+            {% if perms.catalog.add_product %}
             <div class="p-5 col-12">
                 <a class="btn btn-outline-primary" href="{% url 'catalog:create_product' %}">Добавить товар</a>
             </div>
+            {% endif %}
         <div class="p-5 row d-flex mb-3 text-center justify-content-around w-100 align-items-center row-cols-md-3">
             {% for objects in product_list %}
             <div class="col" >

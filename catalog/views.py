@@ -1,3 +1,5 @@
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.http import Http404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy, reverse
 from django.forms import inlineformset_factory
@@ -9,29 +11,45 @@ from pytils.translit import slugify
 
 
 # Домашняя
-class HomeListView(ListView):
+class HomeListView(LoginRequiredMixin, ListView):
     model = Product
     template_name = 'catalog/home.html'
 
     def get_queryset(self):
-        return Product.objects.filter(is_active=True).all()[:6]
+        user = self.request.user
+        if user.is_staff:
+            # Если пользователь - сотрудник сайта, показать все продукты
+            return Product.objects.all()
+        else:
+            # Иначе показать только опубликованные продукты пользователя
+            return Product.objects.filter(owner=user, status='Published')
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user'] = self.request.user
+        return context
+
+
+    #def get_queryset(self):
+    #    return Product.objects.filter(is_active=True).all()[:6]
 
 
 # Категории
-class CategoryListView(ListView):
+class CategoryListView(LoginRequiredMixin, ListView):
     model = Category
     template_name = 'catalog/category.html'
 
 
 # Продукты
-class ProductDetailView(DetailView):
+class ProductDetailView(LoginRequiredMixin, DetailView):
     model = Product
     template_name = 'catalog/product_view.html'
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(LoginRequiredMixin, CreateView):
     model = Product
     form_class = ProductForm
+    permission_required = 'catalog.add_product'
     success_url = reverse_lazy('catalog:home')
 
     def form_valid(self, form):
@@ -42,10 +60,17 @@ class ProductCreateView(CreateView):
         return super().form_valid(form)
 
 
-class ProductUpdateView(UpdateView):
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy('catalog:home')
+
+    def get_object(self, queryset=None):
+        self.object = super().get_object(queryset)
+        if self.object.owner != self.request.user:
+        #if self.object.owner != self.request.user and not self.request.user.is_staff:
+            raise Http404
+        return self.object
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)

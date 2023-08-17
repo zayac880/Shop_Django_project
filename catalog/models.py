@@ -3,6 +3,11 @@ from django.conf import settings
 
 NULLABLE = {'null': True, 'blank': True}
 
+STATUS_CHOICES = (
+        ('Published', 'Опубликован'),
+        ('Draft', 'Черновик'),
+    )
+
 
 class Category(models.Model):
     name = models.CharField(max_length=100, verbose_name='наименование')
@@ -22,6 +27,7 @@ class Product(models.Model):
     date_created = models.DateTimeField(auto_now_add=True, verbose_name='дата создания')
     last_modified_date = models.DateTimeField(auto_now=True, verbose_name='дата последнего изменения')
     is_active = models.BooleanField(default=True, verbose_name='активность')
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Draft', verbose_name='статус публикации')
 
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, **NULLABLE, verbose_name='Владелец')
 

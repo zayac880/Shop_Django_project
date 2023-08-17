@@ -3,6 +3,8 @@ import random
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail
@@ -41,6 +43,7 @@ class RegisterView(CreateView):
         uid = urlsafe_base64_encode(force_bytes(new_user.pk))
         current_site = get_current_site(self.request)
         activation_link = f"http://{current_site.domain}/users/activate/{uid}/{token}/"
+        print(activation_link)
 
 
         send_mail(
@@ -53,7 +56,7 @@ class RegisterView(CreateView):
         return super().form_valid(form)
 
 
-class RedactView(UpdateView):
+class RedactView(LoginRequiredMixin, UpdateView):
     model = User
     form_class = UserRedactForm
     success_url = reverse_lazy('users:redact')
@@ -62,6 +65,7 @@ class RedactView(UpdateView):
         return self.request.user
 
 
+@login_required
 def generate_password(request):
     new_password = ''.join([str(random.randint(0, 9)) for _ in range(12)])
     send_mail(
