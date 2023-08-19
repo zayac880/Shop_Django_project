@@ -1,4 +1,4 @@
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import Http404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy, reverse
@@ -74,7 +74,7 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class ProductUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
     """
     Представление для редактирования продукта.
     Только владелец продукта или пользователи с правом change_product_status
@@ -122,11 +122,12 @@ class ProductUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
         return super().form_valid(form)
 
-    def test_func(self):
+    def test_func(self, queryset = None):
         """
         Функция проверки наличия права доступа или принадлежности к группе модераторов.
         """
-        return self.request.user.has_perm('catalog.change_product_status') or self.request.user.groups.filter(
+        self.object = super().get_object(queryset)
+        return self.object.owner == self.request.user or self.request.user.groups.filter(
             name='managers').exists()
 
 
