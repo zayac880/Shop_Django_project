@@ -10,6 +10,9 @@ STATUS_CHOICES = (
 
 
 class Category(models.Model):
+    """
+    Модель для категорий продуктов.
+    """
     name = models.CharField(max_length=100, verbose_name='наименование')
     description = models.TextField(verbose_name='описание')
     is_active = models.BooleanField(default=True, verbose_name='активность')
@@ -19,6 +22,9 @@ class Category(models.Model):
 
 
 class Product(models.Model):
+    """
+    Модель для продуктов.
+    """
     name = models.CharField(max_length=100, verbose_name='наименование')
     description = models.TextField(verbose_name='описание')
     image = models.ImageField(upload_to='products/', verbose_name='изображение', **NULLABLE)
@@ -31,11 +37,25 @@ class Product(models.Model):
 
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, **NULLABLE, verbose_name='Владелец')
 
+    class Meta:
+        """
+        Мета-класс модели Product с описанием кастомных прав доступа.
+        """
+
+        permissions = [
+            ("change_product_status", "Может изменять статус продукта"),
+            ("change_product_description", "Может изменять описание продукта"),
+            ("change_product_category", "Может изменять категорию продукта"),
+        ]
+
     def __str__(self):
         return f'{self.name} ({self.category}) - {self.price}'
 
 
 class Blog(models.Model):
+    """
+    Модель для записей блога.
+    """
     title = models.CharField(max_length=100, verbose_name='наименование')
     slug = models.CharField(max_length=200, verbose_name='slug')
     content = models.TextField(verbose_name='содержимое')
@@ -49,6 +69,9 @@ class Blog(models.Model):
 
 
 class Version(models.Model):
+    """
+    Модель для версий продуктов.
+    """
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='продукт')
     version_number = models.CharField(max_length=20, verbose_name='номер версии')
     version_name = models.CharField(max_length=100, verbose_name='название версии')
