@@ -9,6 +9,8 @@ from catalog.forms import ProductForm, VersionForm, VersionFormSet
 from catalog.models import Category, Product, Blog, Version
 from pytils.translit import slugify
 
+from catalog.services import get_categories
+
 
 # Домашняя
 class HomeListView(LoginRequiredMixin, ListView):
@@ -45,6 +47,8 @@ class CategoryListView(LoginRequiredMixin, ListView):
     model = Category
     template_name = 'catalog/category.html'
 
+    def get_queryset(self):
+        return get_categories()
 
 # Продукты
 class ProductDetailView(LoginRequiredMixin, DetailView):
@@ -53,6 +57,7 @@ class ProductDetailView(LoginRequiredMixin, DetailView):
     """
     model = Product
     template_name = 'catalog/product_view.html'
+
 
 
 class ProductCreateView(LoginRequiredMixin, CreateView):
